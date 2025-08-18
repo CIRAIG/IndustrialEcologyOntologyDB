@@ -1,0 +1,30 @@
+Django==5.2.8
+psycopg==3.2.6
+python-decouple==3.8
+djangorestframework==3.16.1
+
+# Documentation
+drf-spectacular==0.29.0
+
+# Admin customization
+django-admin-autocomplete-filter==0.7.1
+
+# Auto-cleanup media file
+django-cleanup==9.0.0
+
+# Export automatic admin
+django-import-export==4.3.7
+
+# Async tasks
+celery[pytest]==5.5.3
+pytest==9.0.1
+django-celery-results==2.6.0
+django-celery-beat==2.8.1
+redis==7.0.1
+flower==2.0.1
+
+# Autoreload
+watchfiles==1.0.5
+
+# Import XLSX
+openpyxl==3.1.5

@@ -1,0 +1,11 @@
+{
+  "name": "documentation",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdocs build"
+  },
+  "dependencies": {
+    "staticrypt": "^3.0.0"
+  },
+  "devDependencies": {}
+}

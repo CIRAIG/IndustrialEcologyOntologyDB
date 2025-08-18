@@ -1,0 +1,12 @@
+name: Test
+on:
+  push:
+  pull_request:
+
+jobs:
+  django_unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env
+      - run: docker compose run --rm api python manage.py test

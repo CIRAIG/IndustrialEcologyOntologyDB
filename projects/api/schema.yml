@@ -1,0 +1,3684 @@
+openapi: 3.0.3
+info:
+  title: API Documentation
+  version: 0.1.0
+  description: Industrial Ecology Ontology DB
+paths:
+  /conserved-entities/:
+    get:
+      operationId: conserved_entities_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - conserved-entities
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedConservedEntityList'
+          description: ''
+    post:
+      operationId: conserved_entities_create
+      tags:
+      - conserved-entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConservedEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ConservedEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ConservedEntity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConservedEntity'
+          description: ''
+  /conserved-entities/{id}/:
+    get:
+      operationId: conserved_entities_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Conserved Entity.
+        required: true
+      tags:
+      - conserved-entities
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConservedEntity'
+          description: ''
+    put:
+      operationId: conserved_entities_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Conserved Entity.
+        required: true
+      tags:
+      - conserved-entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConservedEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ConservedEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ConservedEntity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConservedEntity'
+          description: ''
+    patch:
+      operationId: conserved_entities_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Conserved Entity.
+        required: true
+      tags:
+      - conserved-entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedConservedEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedConservedEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedConservedEntity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConservedEntity'
+          description: ''
+    delete:
+      operationId: conserved_entities_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Conserved Entity.
+        required: true
+      tags:
+      - conserved-entities
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /dimensions/:
+    get:
+      operationId: dimensions_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - dimensions
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDimensionList'
+          description: ''
+    post:
+      operationId: dimensions_create
+      tags:
+      - dimensions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dimension'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Dimension'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Dimension'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+          description: ''
+  /dimensions/{id}/:
+    get:
+      operationId: dimensions_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this dimension.
+        required: true
+      tags:
+      - dimensions
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+          description: ''
+    put:
+      operationId: dimensions_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this dimension.
+        required: true
+      tags:
+      - dimensions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dimension'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Dimension'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Dimension'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+          description: ''
+    patch:
+      operationId: dimensions_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this dimension.
+        required: true
+      tags:
+      - dimensions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDimension'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDimension'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDimension'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+          description: ''
+    delete:
+      operationId: dimensions_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this dimension.
+        required: true
+      tags:
+      - dimensions
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /economic-flows/:
+    get:
+      operationId: economic_flows_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - economic-flows
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEconomicFlowList'
+          description: ''
+    post:
+      operationId: economic_flows_create
+      tags:
+      - economic-flows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomicFlow'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EconomicFlow'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EconomicFlow'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomicFlow'
+          description: ''
+  /economic-flows/{id}/:
+    get:
+      operationId: economic_flows_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this economic flow.
+        required: true
+      tags:
+      - economic-flows
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomicFlow'
+          description: ''
+    put:
+      operationId: economic_flows_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this economic flow.
+        required: true
+      tags:
+      - economic-flows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EconomicFlow'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EconomicFlow'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EconomicFlow'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomicFlow'
+          description: ''
+    patch:
+      operationId: economic_flows_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this economic flow.
+        required: true
+      tags:
+      - economic-flows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEconomicFlow'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEconomicFlow'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEconomicFlow'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EconomicFlow'
+          description: ''
+    delete:
+      operationId: economic_flows_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this economic flow.
+        required: true
+      tags:
+      - economic-flows
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /elementary-flow-compartments/:
+    get:
+      operationId: elementary_flow_compartments_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - elementary-flow-compartments
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedElementaryFlowCompartmentList'
+          description: ''
+    post:
+      operationId: elementary_flow_compartments_create
+      tags:
+      - elementary-flow-compartments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlowCompartment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlowCompartment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlowCompartment'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementaryFlowCompartment'
+          description: ''
+  /elementary-flow-compartments/{id}/:
+    get:
+      operationId: elementary_flow_compartments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this elementary flow compartment.
+        required: true
+      tags:
+      - elementary-flow-compartments
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementaryFlowCompartment'
+          description: ''
+    put:
+      operationId: elementary_flow_compartments_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this elementary flow compartment.
+        required: true
+      tags:
+      - elementary-flow-compartments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlowCompartment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlowCompartment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlowCompartment'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementaryFlowCompartment'
+          description: ''
+    patch:
+      operationId: elementary_flow_compartments_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this elementary flow compartment.
+        required: true
+      tags:
+      - elementary-flow-compartments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedElementaryFlowCompartment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedElementaryFlowCompartment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedElementaryFlowCompartment'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementaryFlowCompartment'
+          description: ''
+    delete:
+      operationId: elementary_flow_compartments_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this elementary flow compartment.
+        required: true
+      tags:
+      - elementary-flow-compartments
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /elementary-flows/:
+    get:
+      operationId: elementary_flows_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - elementary-flows
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedElementaryFlowList'
+          description: ''
+    post:
+      operationId: elementary_flows_create
+      tags:
+      - elementary-flows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlow'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlow'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlow'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementaryFlow'
+          description: ''
+  /elementary-flows/{id}/:
+    get:
+      operationId: elementary_flows_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this elementary flow.
+        required: true
+      tags:
+      - elementary-flows
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementaryFlow'
+          description: ''
+    put:
+      operationId: elementary_flows_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this elementary flow.
+        required: true
+      tags:
+      - elementary-flows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlow'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlow'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ElementaryFlow'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementaryFlow'
+          description: ''
+    patch:
+      operationId: elementary_flows_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this elementary flow.
+        required: true
+      tags:
+      - elementary-flows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedElementaryFlow'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedElementaryFlow'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedElementaryFlow'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementaryFlow'
+          description: ''
+    delete:
+      operationId: elementary_flows_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this elementary flow.
+        required: true
+      tags:
+      - elementary-flows
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /good-contain-good/:
+    get:
+      operationId: good_contain_good_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - good-contain-good
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGoodContainGoodList'
+          description: ''
+    post:
+      operationId: good_contain_good_create
+      tags:
+      - good-contain-good
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoodContainGood'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GoodContainGood'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GoodContainGood'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodContainGood'
+          description: ''
+  /good-contain-good/{id}/:
+    get:
+      operationId: good_contain_good_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good contain good.
+        required: true
+      tags:
+      - good-contain-good
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodContainGood'
+          description: ''
+    put:
+      operationId: good_contain_good_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good contain good.
+        required: true
+      tags:
+      - good-contain-good
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoodContainGood'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GoodContainGood'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GoodContainGood'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodContainGood'
+          description: ''
+    patch:
+      operationId: good_contain_good_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good contain good.
+        required: true
+      tags:
+      - good-contain-good
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGoodContainGood'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGoodContainGood'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGoodContainGood'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodContainGood'
+          description: ''
+    delete:
+      operationId: good_contain_good_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good contain good.
+        required: true
+      tags:
+      - good-contain-good
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /good-contain-te/:
+    get:
+      operationId: good_contain_te_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - good-contain-te
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGoodContainTransformableEntityList'
+          description: ''
+    post:
+      operationId: good_contain_te_create
+      tags:
+      - good-contain-te
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoodContainTransformableEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GoodContainTransformableEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GoodContainTransformableEntity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodContainTransformableEntity'
+          description: ''
+  /good-contain-te/{id}/:
+    get:
+      operationId: good_contain_te_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good contain transformable
+          entity.
+        required: true
+      tags:
+      - good-contain-te
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodContainTransformableEntity'
+          description: ''
+    put:
+      operationId: good_contain_te_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good contain transformable
+          entity.
+        required: true
+      tags:
+      - good-contain-te
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoodContainTransformableEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GoodContainTransformableEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GoodContainTransformableEntity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodContainTransformableEntity'
+          description: ''
+    patch:
+      operationId: good_contain_te_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good contain transformable
+          entity.
+        required: true
+      tags:
+      - good-contain-te
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGoodContainTransformableEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGoodContainTransformableEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGoodContainTransformableEntity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodContainTransformableEntity'
+          description: ''
+    delete:
+      operationId: good_contain_te_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good contain transformable
+          entity.
+        required: true
+      tags:
+      - good-contain-te
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /goods/:
+    get:
+      operationId: goods_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - goods
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGoodList'
+          description: ''
+    post:
+      operationId: goods_create
+      tags:
+      - goods
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Good'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Good'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Good'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Good'
+          description: ''
+  /goods/{id}/:
+    get:
+      operationId: goods_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good.
+        required: true
+      tags:
+      - goods
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Good'
+          description: ''
+    put:
+      operationId: goods_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good.
+        required: true
+      tags:
+      - goods
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Good'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Good'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Good'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Good'
+          description: ''
+    patch:
+      operationId: goods_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good.
+        required: true
+      tags:
+      - goods
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGood'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGood'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGood'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Good'
+          description: ''
+    delete:
+      operationId: goods_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this good.
+        required: true
+      tags:
+      - goods
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /processes/:
+    get:
+      operationId: processes_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - processes
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProcessList'
+          description: ''
+    post:
+      operationId: processes_create
+      tags:
+      - processes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Process'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Process'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Process'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Process'
+          description: ''
+  /processes/{id}/:
+    get:
+      operationId: processes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Process.
+        required: true
+      tags:
+      - processes
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Process'
+          description: ''
+    put:
+      operationId: processes_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Process.
+        required: true
+      tags:
+      - processes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Process'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Process'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Process'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Process'
+          description: ''
+    patch:
+      operationId: processes_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Process.
+        required: true
+      tags:
+      - processes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProcess'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProcess'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProcess'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Process'
+          description: ''
+    delete:
+      operationId: processes_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Process.
+        required: true
+      tags:
+      - processes
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /projects/:
+    get:
+      operationId: projects_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - projects
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProjectList'
+          description: ''
+    post:
+      operationId: projects_create
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Project'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Project'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+  /projects/{id}/:
+    get:
+      operationId: projects_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this project.
+        required: true
+      tags:
+      - projects
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+    put:
+      operationId: projects_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this project.
+        required: true
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Project'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Project'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+    patch:
+      operationId: projects_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this project.
+        required: true
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProject'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: ''
+    delete:
+      operationId: projects_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this project.
+        required: true
+      tags:
+      - projects
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /taxonomies/:
+    get:
+      operationId: taxonomies_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - taxonomies
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTaxonomyList'
+          description: ''
+    post:
+      operationId: taxonomies_create
+      tags:
+      - taxonomies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Taxonomy'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Taxonomy'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Taxonomy'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Taxonomy'
+          description: ''
+  /taxonomies/{id}/:
+    get:
+      operationId: taxonomies_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Taxonomy.
+        required: true
+      tags:
+      - taxonomies
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Taxonomy'
+          description: ''
+    put:
+      operationId: taxonomies_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Taxonomy.
+        required: true
+      tags:
+      - taxonomies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Taxonomy'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Taxonomy'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Taxonomy'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Taxonomy'
+          description: ''
+    patch:
+      operationId: taxonomies_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Taxonomy.
+        required: true
+      tags:
+      - taxonomies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTaxonomy'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTaxonomy'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTaxonomy'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Taxonomy'
+          description: ''
+    delete:
+      operationId: taxonomies_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Taxonomy.
+        required: true
+      tags:
+      - taxonomies
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /te-contain-ce/:
+    get:
+      operationId: te_contain_ce_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - te-contain-ce
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransformableEntityContainConservedEntityList'
+          description: ''
+    post:
+      operationId: te_contain_ce_create
+      tags:
+      - te-contain-ce
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+          description: ''
+  /te-contain-ce/{id}/:
+    get:
+      operationId: te_contain_ce_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transformable entity
+          contain conserved entity.
+        required: true
+      tags:
+      - te-contain-ce
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+          description: ''
+    put:
+      operationId: te_contain_ce_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transformable entity
+          contain conserved entity.
+        required: true
+      tags:
+      - te-contain-ce
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+          description: ''
+    patch:
+      operationId: te_contain_ce_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transformable entity
+          contain conserved entity.
+        required: true
+      tags:
+      - te-contain-ce
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTransformableEntityContainConservedEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTransformableEntityContainConservedEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTransformableEntityContainConservedEntity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+          description: ''
+    delete:
+      operationId: te_contain_ce_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transformable entity
+          contain conserved entity.
+        required: true
+      tags:
+      - te-contain-ce
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /terms/:
+    get:
+      operationId: terms_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - terms
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTermList'
+          description: ''
+    post:
+      operationId: terms_create
+      tags:
+      - terms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Term'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Term'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Term'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+          description: ''
+  /terms/{id}/:
+    get:
+      operationId: terms_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this term.
+        required: true
+      tags:
+      - terms
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+          description: ''
+    put:
+      operationId: terms_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this term.
+        required: true
+      tags:
+      - terms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Term'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Term'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Term'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+          description: ''
+    patch:
+      operationId: terms_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this term.
+        required: true
+      tags:
+      - terms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTerm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTerm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTerm'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Term'
+          description: ''
+    delete:
+      operationId: terms_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this term.
+        required: true
+      tags:
+      - terms
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /transformable-entities/:
+    get:
+      operationId: transformable_entities_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - transformable-entities
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransformableEntityList'
+          description: ''
+    post:
+      operationId: transformable_entities_create
+      tags:
+      - transformable-entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformableEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransformableEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransformableEntity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformableEntity'
+          description: ''
+  /transformable-entities/{id}/:
+    get:
+      operationId: transformable_entities_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Transformable Entity.
+        required: true
+      tags:
+      - transformable-entities
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformableEntity'
+          description: ''
+    put:
+      operationId: transformable_entities_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Transformable Entity.
+        required: true
+      tags:
+      - transformable-entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformableEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransformableEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransformableEntity'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformableEntity'
+          description: ''
+    patch:
+      operationId: transformable_entities_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Transformable Entity.
+        required: true
+      tags:
+      - transformable-entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTransformableEntity'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTransformableEntity'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTransformableEntity'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformableEntity'
+          description: ''
+    delete:
+      operationId: transformable_entities_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Transformable Entity.
+        required: true
+      tags:
+      - transformable-entities
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /units/:
+    get:
+      operationId: units_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - units
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUnitList'
+          description: ''
+    post:
+      operationId: units_create
+      tags:
+      - units
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Unit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Unit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Unit'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: ''
+  /units/{id}/:
+    get:
+      operationId: units_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this unit.
+        required: true
+      tags:
+      - units
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: ''
+    put:
+      operationId: units_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this unit.
+        required: true
+      tags:
+      - units
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Unit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Unit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Unit'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: ''
+    patch:
+      operationId: units_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this unit.
+        required: true
+      tags:
+      - units
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUnit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUnit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUnit'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: ''
+    delete:
+      operationId: units_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this unit.
+        required: true
+      tags:
+      - units
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    ConservedEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 512
+        short_name:
+          type: string
+          nullable: true
+          description: Short name or symbol for the conserved entity (e.g., 'C' for
+            Carbon).
+          maxLength: 64
+        molar_mass:
+          type: number
+          format: double
+          nullable: true
+          description: Molar mass of the conserved entity in g/mol.
+        terms:
+          type: array
+          items:
+            type: integer
+        terms_detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/Term'
+          readOnly: true
+      required:
+      - id
+      - name
+      - project
+      - terms_detail
+      - url
+    Dimension:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 128
+        description:
+          type: string
+          nullable: true
+      required:
+      - id
+      - name
+      - project
+      - url
+    DirectionEnum:
+      enum:
+      - input
+      - output
+      type: string
+      description: |-
+        * `input` - Input
+        * `output` - Output
+    EconomicFlow:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        process:
+          type: string
+          format: uri
+        good:
+          type: string
+          format: uri
+        quantity:
+          type: number
+          format: double
+          description: Quantity of good in the economic flow.
+        unit:
+          type: string
+          format: uri
+          description: Unit of the quantity.
+        direction:
+          allOf:
+          - $ref: '#/components/schemas/DirectionEnum'
+          description: |-
+            Indicates whether the good is an input to or an output from the process.
+
+            * `input` - Input
+            * `output` - Output
+        is_byproduct:
+          type: boolean
+          description: True if the good is a byproduct of the process, False otherwise.
+      required:
+      - direction
+      - good
+      - id
+      - process
+      - quantity
+      - unit
+      - url
+    ElementaryFlow:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        process:
+          type: string
+          format: uri
+        compartment:
+          type: string
+          format: uri
+        conserved_entity:
+          type: string
+          format: uri
+        quantity:
+          type: number
+          format: double
+          description: Quantity of conserved entity in the elementary flow.
+        unit:
+          type: string
+          format: uri
+          description: Unit of the quantity.
+        direction:
+          allOf:
+          - $ref: '#/components/schemas/DirectionEnum'
+          description: |-
+            Indicates whether the conserved entity is an input to or an output from the process.
+
+            * `input` - Input
+            * `output` - Output
+      required:
+      - compartment
+      - conserved_entity
+      - direction
+      - id
+      - process
+      - quantity
+      - unit
+      - url
+    ElementaryFlowCompartment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 128
+        description:
+          type: string
+          nullable: true
+        parent_compartment:
+          type: string
+          format: uri
+          nullable: true
+          description: Parent compartment if this is a sub-compartment.
+      required:
+      - id
+      - name
+      - project
+      - url
+    Good:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+        reference_unit:
+          type: string
+          format: uri
+          description: Reference unit for the good.
+      required:
+      - id
+      - name
+      - project
+      - reference_unit
+      - url
+    GoodContainGood:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        parent_good:
+          type: string
+          format: uri
+        child_good:
+          type: string
+          format: uri
+        quantity:
+          type: number
+          format: double
+          description: Quantity of child good in the parent good.
+        unit:
+          type: string
+          format: uri
+          description: Unit of the quantity.
+      required:
+      - child_good
+      - id
+      - parent_good
+      - quantity
+      - unit
+      - url
+    GoodContainTransformableEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        good:
+          type: string
+          format: uri
+        transformable_entity:
+          type: string
+          format: uri
+        quantity:
+          type: number
+          format: double
+          description: Quantity of transformable entity in the good.
+        unit:
+          type: string
+          format: uri
+          description: Unit of the quantity.
+      required:
+      - good
+      - id
+      - quantity
+      - transformable_entity
+      - unit
+      - url
+    PaginatedConservedEntityList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConservedEntity'
+    PaginatedDimensionList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dimension'
+    PaginatedEconomicFlowList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomicFlow'
+    PaginatedElementaryFlowCompartmentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementaryFlowCompartment'
+    PaginatedElementaryFlowList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementaryFlow'
+    PaginatedGoodContainGoodList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoodContainGood'
+    PaginatedGoodContainTransformableEntityList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoodContainTransformableEntity'
+    PaginatedGoodList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Good'
+    PaginatedProcessList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Process'
+    PaginatedProjectList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+    PaginatedTaxonomyList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Taxonomy'
+    PaginatedTermList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Term'
+    PaginatedTransformableEntityContainConservedEntityList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformableEntityContainConservedEntity'
+    PaginatedTransformableEntityList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformableEntity'
+    PaginatedUnitList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Unit'
+    PatchedConservedEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 512
+        short_name:
+          type: string
+          nullable: true
+          description: Short name or symbol for the conserved entity (e.g., 'C' for
+            Carbon).
+          maxLength: 64
+        molar_mass:
+          type: number
+          format: double
+          nullable: true
+          description: Molar mass of the conserved entity in g/mol.
+        terms:
+          type: array
+          items:
+            type: integer
+        terms_detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/Term'
+          readOnly: true
+    PatchedDimension:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 128
+        description:
+          type: string
+          nullable: true
+    PatchedEconomicFlow:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        process:
+          type: string
+          format: uri
+        good:
+          type: string
+          format: uri
+        quantity:
+          type: number
+          format: double
+          description: Quantity of good in the economic flow.
+        unit:
+          type: string
+          format: uri
+          description: Unit of the quantity.
+        direction:
+          allOf:
+          - $ref: '#/components/schemas/DirectionEnum'
+          description: |-
+            Indicates whether the good is an input to or an output from the process.
+
+            * `input` - Input
+            * `output` - Output
+        is_byproduct:
+          type: boolean
+          description: True if the good is a byproduct of the process, False otherwise.
+    PatchedElementaryFlow:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        process:
+          type: string
+          format: uri
+        compartment:
+          type: string
+          format: uri
+        conserved_entity:
+          type: string
+          format: uri
+        quantity:
+          type: number
+          format: double
+          description: Quantity of conserved entity in the elementary flow.
+        unit:
+          type: string
+          format: uri
+          description: Unit of the quantity.
+        direction:
+          allOf:
+          - $ref: '#/components/schemas/DirectionEnum'
+          description: |-
+            Indicates whether the conserved entity is an input to or an output from the process.
+
+            * `input` - Input
+            * `output` - Output
+    PatchedElementaryFlowCompartment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 128
+        description:
+          type: string
+          nullable: true
+        parent_compartment:
+          type: string
+          format: uri
+          nullable: true
+          description: Parent compartment if this is a sub-compartment.
+    PatchedGood:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+        reference_unit:
+          type: string
+          format: uri
+          description: Reference unit for the good.
+    PatchedGoodContainGood:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        parent_good:
+          type: string
+          format: uri
+        child_good:
+          type: string
+          format: uri
+        quantity:
+          type: number
+          format: double
+          description: Quantity of child good in the parent good.
+        unit:
+          type: string
+          format: uri
+          description: Unit of the quantity.
+    PatchedGoodContainTransformableEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        good:
+          type: string
+          format: uri
+        transformable_entity:
+          type: string
+          format: uri
+        quantity:
+          type: number
+          format: double
+          description: Quantity of transformable entity in the good.
+        unit:
+          type: string
+          format: uri
+          description: Unit of the quantity.
+    PatchedProcess:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+    PatchedProject:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        name:
+          type: string
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedTaxonomy:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        name:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+    PatchedTerm:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        taxonomy:
+          type: string
+          format: uri
+        taxonomy_name:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+    PatchedTransformableEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 512
+        short_name:
+          type: string
+          nullable: true
+          description: Short name or symbol for the transformable entity (e.g., 'CH4'
+            for Methane).
+          maxLength: 64
+        terms:
+          type: array
+          items:
+            type: integer
+        terms_detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/Term'
+          readOnly: true
+    PatchedTransformableEntityContainConservedEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        conserved_entity:
+          type: string
+          format: uri
+        transformable_entity:
+          type: string
+          format: uri
+        unit:
+          type: string
+          format: uri
+          description: Unit of the ratio.
+        ratio:
+          type: number
+          format: double
+          description: Ratio of conserved entity per unit of transformable entity.
+    PatchedUnit:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        name:
+          type: string
+          maxLength: 128
+        symbol:
+          type: string
+          maxLength: 32
+        dimension:
+          type: string
+          format: uri
+        dimension_name:
+          type: string
+          readOnly: true
+    Process:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+      required:
+      - id
+      - name
+      - project
+      - url
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        name:
+          type: string
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - updated_at
+      - url
+    Taxonomy:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        name:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+      required:
+      - id
+      - name
+      - url
+    Term:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        taxonomy:
+          type: string
+          format: uri
+        taxonomy_name:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+      required:
+      - id
+      - name
+      - taxonomy
+      - taxonomy_name
+      - url
+    TransformableEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        project:
+          type: string
+          format: uri
+        name:
+          type: string
+          maxLength: 512
+        short_name:
+          type: string
+          nullable: true
+          description: Short name or symbol for the transformable entity (e.g., 'CH4'
+            for Methane).
+          maxLength: 64
+        terms:
+          type: array
+          items:
+            type: integer
+        terms_detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/Term'
+          readOnly: true
+      required:
+      - id
+      - name
+      - project
+      - terms_detail
+      - url
+    TransformableEntityContainConservedEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        conserved_entity:
+          type: string
+          format: uri
+        transformable_entity:
+          type: string
+          format: uri
+        unit:
+          type: string
+          format: uri
+          description: Unit of the ratio.
+        ratio:
+          type: number
+          format: double
+          description: Ratio of conserved entity per unit of transformable entity.
+      required:
+      - conserved_entity
+      - id
+      - ratio
+      - transformable_entity
+      - unit
+      - url
+    Unit:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        name:
+          type: string
+          maxLength: 128
+        symbol:
+          type: string
+          maxLength: 32
+        dimension:
+          type: string
+          format: uri
+        dimension_name:
+          type: string
+          readOnly: true
+      required:
+      - dimension
+      - dimension_name
+      - id
+      - name
+      - symbol
+      - url
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

@@ -1,0 +1,547 @@
+@startuml
+hide methods
+hide stereotypes
+skinparam linetype ortho
+skinparam class {
+  BackgroundColor White
+  BorderColor Black
+}
+
+' ---------- Référentiels communs ----------
+entity "dimension" as dimension {
+  * id : uuid <<PK>>
+  --
+  name : text
+  description : text    ' masse, énergie, mole, etc.
+}
+
+entity "unit" as unit {
+  * id : uuid <<PK>>
+  --
+  name : text
+  symbol : text
+  dimension : uuid <<FK>>
+}
+
+entity "measurement" as measurement {
+  * id : uuid <<PK>>
+  --
+  economic_flow_id : uuid <<FK>>       ' FK into that table
+  value : text           ' will need parsing depending of the unit
+  unit_id : uuid <<FK>>
+  note : text
+}
+
+entity "taxonomy" as taxonomy {
+  * id : uuid <<PK>>
+  --
+  name : text           ' CPC / ISIC / interne
+  description : text
+}
+
+entity "term" as term {
+  * id : uuid <<PK>>
+  --
+  taxonomy_id : uuid <<FK>>
+  code : text
+  label : text
+  parent_id : uuid <<FK>>  ' hiérarchie optionnelle
+}
+
+entity "term_assignment" as ta {
+  * id : uuid <<PK>>
+  --
+  term_id : uuid <<FK>>
+  table_name : text      ' pflow/tec/trc/gcs/shp/gcg/param...
+  row_id : uuid
+  field_name : text      ' good_id/substance_id/...
+}
+
+entity "source" as source {
+  * id : uuid <<PK>>
+  --
+  table_name : text
+  row_id : uuid
+  field_name : text
+  title : text
+  year : int
+  doi_or_url : text
+  citation : text
+}
+
+entity "region" as region {
+  * id : uuid <<PK>>
+  --
+  code : text            ' CH, RER, GLO, etc.
+  label : text
+  parent_id : uuid <<FK>>  ' topologie de régions
+}
+
+' ---------- Gouvernance des jeux de données ----------
+entity "study" as study {
+  * id : uuid <<PK>>
+  --
+  title : text
+  description : text
+  created_at : timestamptz 
+}
+
+entity "dataset" as dataset {
+  * id : uuid <<PK>>
+  --
+  study_id : uuid <<FK>>
+  name : text
+  description : text
+}
+
+entity "dataset_version" as dsv {
+  * id : uuid <<PK>>
+  --
+  dataset_id : uuid <<FK>>
+  version_tag : text       ' v1.0, 2025-03-01, etc.
+  valid_from : date
+  valid_to : date
+  region_id : uuid <<FK>>
+  created_at : timestamptz
+  status : text             ' draft/reviewed/published
+}
+
+' ---------- Noyau matière : Bien / Substance / Propriété ----------
+entity "good" as good {
+  * id : uuid <<PK>>
+  --
+  name : text
+  description : text
+  classification_id : uuid <<FK>>  ' term
+}
+
+entity "intensive_property_value" as gprop_value {
+  * id : uuid <<PK>>
+  --
+  value : numeric
+  intensive_property_id : uuid <<FK>>
+  table_name : text      ' pflow/tec/trc/gcs/shp/gcg/param...
+  row_id : uuid
+  field_name : text      ' good_id/substance_id/...
+}
+
+entity "intensive_property" as gprop {
+  * id : uuid <<PK>>
+  --
+  unit_id : uuid <<FK>>
+  name : text ` masse molaire par exemple
+}
+
+entity "transformable_entity" as substance {
+  * id : uuid <<PK>>
+  --
+  name : text
+}
+
+entity "conserved_entity" as cprop {
+  * id : uuid <<PK>>
+  --
+  name : text         ' C, H, Fe, ... (éléments) ou propriété conservée
+}
+
+' Conteneur hiérarchique : biens dans des biens (BOM)
+entity "good_contains_good" as gcg {
+  * parent_good_id : uuid <<FK>>
+  * child_good_id : uuid <<FK>>
+  --
+  amount : numeric
+  unit_id : uuid <<FK>>
+}
+
+' Substances dans les biens
+entity "good_contains_transformable_entity" as gcs {
+  * good_id : uuid <<FK>>
+  * transformable_entity_id : uuid <<FK>>
+  --
+  amount : numeric
+  unit_id : uuid <<FK>>
+}
+
+' Propriétés conservées dans les substances (stoichiométrie / facteurs)
+entity "transformable_entity_contain_conserved_entity" as shp {
+  * transformable_entity_id : uuid <<FK>>
+  * conserved_entity_id : uuid <<FK>>
+  --
+  ratio : numeric        ' ex. kgC par kg de substance
+  unit_id : uuid <<FK>>
+}
+
+' ---------- Noyau processus ----------
+entity "process" as process {
+  * id : uuid <<PK>>
+  --
+  dataset_version_id : uuid <<FK>>
+  name : text
+  description : text
+  region_id : uuid <<FK>>
+}
+
+entity "custom_process_parameter" {
+  * id : uuid <<PK>>
+  --
+  process_id : uuid <<FK>>
+  name : text
+  value : text          ' will need parsing depending of the unit
+  unit_id : uuid <<FK>>
+  note : text
+}
+
+' Flux d'entrée/sortie d’un processus (biens ou substances)
+entity "economic_flow" as pflow {
+  * id : uuid <<PK>>
+  * good_type : text  ' good | proxy
+  * good_id : uuid <<FK>>
+  * process_id : uuid <<FK>>
+  --
+  role : text            ' input | output
+  is_reference_product : boolean ' flags which output flow defines the process’s functional unit
+}
+
+entity "compartment" {
+  * id : uuid <<PK>>
+  * parent_id : uuid <<FK>>  ' hiérarchie optionnelle
+  --
+  name : text           ' air, water, soil, etc.
+  description : text
+}
+
+entity "elementary_flow" {
+  * id : uuid <<PK>>
+  --
+  name : text
+  description : text
+  classification_id : uuid <<FK>>  ' term
+}
+
+entity "factor" as factor {
+  * id : uuid <<PK>>
+  --
+  name : text
+  description : text
+  classification_id : uuid <<FK>>  ' term
+}
+
+' Coefficients TR (transfert) – ordre explicite
+entity "transfer_coefficient" as trc {
+  * id : uuid <<PK>>
+  --
+  process_id : uuid <<FK>>
+  cons_in_property_id : uuid <<FK>>   ' propriété/élément suivi en entrée (ex. C)
+  trans_in_substance_id : uuid <<FK>> ' optionnel (substance d'entrée)
+  goods_in_id : uuid <<FK>>           ' optionnel (bien d'entrée)
+  trans_out_substance_id : uuid <<FK>> ' optionnel (substance sortie)
+  goods_out_id : uuid <<FK>>           ' optionnel (bien sortie)
+  value : numeric                      ' part transférée
+  order_index : int                    ' séquencement des applis
+  note : text
+}
+
+' Coefficients TE (techniques) – ordre explicite + base
+entity "technical_coefficient" as tec {
+  * id : uuid <<PK>>
+  --
+  process_id : uuid <<FK>>
+  determined_flow_role : text   ' input|output|emission
+  good_id : uuid <<FK>>         ' ou
+  substance_id : uuid <<FK>>    '   l'un des deux
+  value : numeric
+  unit_id : uuid <<FK>>
+  basis_type : text             ' per_FU | per_property | per_flow
+  reference_property_id : uuid <<FK>>  ' si basis_type = per_property (ex. par kg-N)
+  order_index : int
+  functional : boolean          ' impact du FU vs auxiliaire
+  note : text
+}
+
+' Contraintes de processus (bornes, ratios, conservation)
+entity "measurement_constraint" as measurement_constraint {
+  * id : uuid <<PK>>
+  --
+  measurement_id : uuid <<FK>>
+  kind : text          ' min|max|ratio|balance
+  json_value : json    ' structure that depends of the kind
+  note : text
+}
+
+' ---------- Systèmes & substitution ----------
+entity "system_model" as smod {
+  * id : uuid <<PK>>
+  --
+  dataset_version_id : uuid <<FK>>
+  name : text
+  description : text
+  objective : text     ' e.g. minimize deviation ...
+}
+
+entity "system_node" as snode {
+  * id : uuid <<PK>>
+  --
+  system_model_id : uuid <<FK>>
+  process_id : uuid <<FK>>
+  label : text
+}
+
+entity "system_edge" as sedge {
+  * id : uuid <<PK>>
+  --
+  from_node_id : uuid <<FK>>
+  to_node_id : uuid <<FK>>
+  condition : text      ' règle de routage/substitution (ex. propriété>=seuil)
+}
+
+' ---------- Incertitudes & métadonnées optionnelles ----------
+' Liens d'incertitude sur n'importe quelle mesure (pattern clé)
+entity "measure_uncertainty" as mu {
+  * id : uuid <<PK>>
+  --
+  table_name : text   ' pflow/tec/trc/gcs/shp/gcg/param...
+  row_id : uuid
+  field_name : text   ' amount/value/ratio/...
+  kind : text         ' lognormal|normal|triangular|uniform
+  distribution_params : json ' structure that depends of the kind
+  note : text
+}
+
+' --- PROXY declaration ---
+entity "proxy_definition" as proxy {
+  * id : uuid <<PK>>
+  --
+  good_id : uuid <<FK>>             ' the good you want to use as a proxy
+  similarity_score : numeric        ' optional (0..1 or %)
+  risk_level : text                 ' low|med|high (optional)
+  skip_flag : boolean               ' must surface in final report or not
+  reason     : text                 ' why the proxy
+  method     : text                 ' how it was chosen (expert judgment, lit, etc.)
+  note       : text
+  valid_from : timestamptz
+  valid_to   : timestamptz
+}
+
+' --- OPTIONAL: small corrections to align proxy behavior ---
+entity "proxy_measurement_adjustment" as pma {
+  * id : uuid <<PK>>
+  --
+  measurement_id : uuid <<FK>>
+  factor : numeric            ' value' = factor * initial_value + offset
+  offset : numeric
+  note : text
+}
+
+entity "characterization_method" as imethod {
+  * id : uuid <<PK>>
+  --
+  name : text
+  description : text
+}
+
+entity "impact" as impact {
+  * id : uuid <<PK>>
+  --
+  method_id : uuid <<FK>>
+  name : text
+  unit_id : uuid <<FK>>       ' unité de l’impact
+  time_horizon : text
+  level : text                ' midpoint | endpoint
+  description : text
+}
+
+entity "characterization_factor" as cf {
+  * id : uuid <<PK>>
+  --
+  method_id : uuid <<FK>>
+  impact_id : uuid <<FK>>
+  elementary_flow_id : uuid <<FK>>
+  conversion_factor : numeric ' quantité multipliée par ce facteur
+  note : text
+}
+
+' ============================================================
+' ======       BACKGROUND DATASETS / PROCESS CLUSTERS    =====
+' ============================================================
+
+entity "background_dataset" as bgd {
+  * id : uuid <<PK>>
+  --
+  name : text
+  publisher : text
+  external_id : text     ' identifiant catalogue
+  version : text
+  description : text
+}
+
+' Un « cluster » référence des process_models (ou process) externes
+entity "background_dataset_has_process" as bg_cluster {
+  * id : uuid <<PK>>
+  --
+  background_dataset_id : uuid <<FK>>
+  external_process_id : text     ' id du process dans le dataset
+}
+
+' ============================================================
+' ======     SYSTEM MODEL – EXPERIENCE & OPTIM MATCHING   =====
+' ============================================================
+
+' Snapshot d’étude/scénario pour l’optimisation
+entity "experience" as exp {
+  * id : uuid <<PK>>
+  --
+  system_model_id : uuid <<FK>>
+  author : text
+  version : text
+  system_boundaries : text
+  objectives : text
+  function_desc : text
+  created_at : timestamptz
+}
+
+' Un « process_model » explicite le flow de référence (FU) d’un process
+entity "process_model" as pmodel {
+  * id : uuid <<PK>>
+  --
+  process_id : uuid <<FK>>          ' process interne
+  reference_flow_id : uuid <<FK>>   ' pflow.id (is_reference_product = true)
+  label : text
+  note : text
+}
+
+' Liste des process_models générateurs utilisés dans une experience
+entity "experience_generators" as exp_gen {
+  * id : uuid <<PK>>
+  --
+  experience_id : uuid <<FK>>
+  process_model_id : uuid <<FK>>
+}
+
+' Demande finale (peut contenir plusieurs goods)
+entity "final_demand" as fd {
+  * id : uuid <<PK>>
+  --
+  experience_id : uuid <<FK>>
+  good_id : uuid <<FK>>
+  quantity : numeric
+  unit_id : uuid <<FK>>
+}
+
+' Bornes par process (sur le flow de référence ou un flow spécifique)
+entity "process_bounds" as pb {
+  * id : uuid <<PK>>
+  --
+  experience_id : uuid <<FK>>
+  process_id : uuid <<FK>>
+  economic_flow_id : uuid <<FK>>  ' quel flow borne-t-on (souvent le FU)
+  lower_bound : numeric
+  upper_bound : numeric
+  unit_id : uuid <<FK>>           ' cohérent avec le flow borné
+}
+
+' Contraintes agrégées sur impacts/EF/costs (somme globale)
+entity "factor_impact_constraints" as fic {
+  * id : uuid <<PK>>
+  --
+  experience_id : uuid <<FK>>
+  impact_id : uuid <<FK>>
+  elementary_flow_id : uuid <<FK>>
+  impact_quantity : numeric
+  elementary_flow_quantity : numeric
+  impact_unit_id : uuid <<FK>>       
+  elementary_flow_unit_id : uuid <<FK>>
+}
+
+' Matching d’un flow interne vers un process « background »
+entity "flow_background_match" as fbm {
+  * id : uuid <<PK>>
+  --
+  process_flow_id : uuid <<FK>>
+  background_dataset_id : uuid <<FK>>
+  background_process_id : text
+  conversion_factor : numeric
+}
+
+' ============================================================
+' ======================= Relations ==========================
+' ============================================================
+
+study "1" -- "0..*" dataset
+dataset "1" -- "0..*" dsv
+dsv "1" -- "0..*" process
+dsv "1" -- "0..*" smod
+
+pflow "0..*" -- "0..1" good
+
+process "1" -- "0..*" pflow
+process "1" -- "0..*" trc
+process "1" -- "0..*" tec
+process "1" -- "0..*" custom_process_parameter
+
+snode "0..*" -- "1" process
+smod "1" -- "0..*" snode
+snode "1" -- "0..*" sedge : from
+snode "1" -- "0..*" sedge : to
+
+good "1" -- "0..*" gcg
+good "1" -- "0..*" gcg
+
+gprop_value "0..*" -- "1" gprop
+
+process "0..*" -- "0..*" elementary_flow
+factor "1" -- "0..*" elementary_flow
+compartment "1" -- "0..*" elementary_flow
+compartment "1" -- "0..*" compartment
+factor "0..*" -- "0..*" substance
+
+good "1" -- "0..*" gcs
+substance "1" -- "0..*" shp
+cprop "1" -- "0..*" shp
+
+substance "1" -- "0..*" gcs
+
+taxonomy "1" -- "0..*" term
+term "1" -- "0..*" ta
+
+region "1" -- "0..*" dsv
+region "1" -- "0..*" process
+
+dimension "1" -- "0..*" unit
+
+measurement "1..*" -- "1" pflow
+measurement_constraint "0..*" -- "1" measurement
+
+proxy "0..1" -- "0..*" pflow
+proxy "0..*" -- "1" good
+
+pma "0..*" -- "1" proxy
+
+' ---- relations nouveaux blocs ----
+imethod "1" -- "0..*" impact
+impact "1" -- "0..*" cf
+elementary_flow "1" -- "0..*" cf
+
+bgd "1" -- "0..*" bg_cluster
+
+smod "1" -- "0..*" exp
+process "1" -- "0..*" pmodel
+pflow "1" -- "0..*" pmodel : reference_flow
+
+exp "1" -- "0..*" exp_gen
+pmodel "1" -- "0..*" exp_gen
+
+exp "1" -- "0..*" fd
+good "1" -- "0..*" fd
+
+exp "1" -- "0..*" pb
+process "1" -- "0..*" pb
+pflow "1" -- "0..*" pb
+
+exp "1" -- "0..*" fic
+impact "0..1" -- "0..*" fic
+elementary_flow "0..1" -- "0..*" fic
+
+pflow "1" -- "0..*" fbm
+bgd "1" -- "0..*" fbm
+
+@enduml

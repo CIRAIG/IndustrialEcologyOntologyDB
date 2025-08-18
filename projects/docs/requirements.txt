@@ -1,0 +1,4 @@
+mkdocs==1.6.1
+mkdocs-include-markdown-plugin==7.1.6
+mkdocs-material==9.6.17
+ghp_import==2.1.0

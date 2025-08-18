@@ -1,0 +1,45 @@
+site_name: IndustrialEcologyOntologyDB
+site_description: A tentative ontology for industrial ecology.
+repo_name: CIRAIG/IndustrialEcologyOntologyDB
+repo_url: https://github.com/CIRAIG/IndustrialEcologyOntologyDB
+site_dir: site
+docs_dir: pages
+copyright:
+dev_addr: 0.0.0.0:8001
+edit_uri: ''
+nav:
+  - Home:
+      - Introdution: 'index.md'
+      - Packaging: 'packaging.md'
+theme:
+  name: material
+  custom_dir: extra/overrides
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate 
+  palette:
+    primary: indigo
+    accent: orange
+
+extra_css:
+  - extra/stylesheets/extra.css
+
+plugins:
+  - include-markdown
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+      linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.details
+  - attr_list
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true

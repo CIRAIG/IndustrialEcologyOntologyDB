@@ -1,0 +1,14 @@
+Sort by: {{sorting?.columnKey}} ({{sorting?.order}})
+
+<hr/>
+
+<app-smart-table
+  [columns]="columns"
+  [rows]="rows"
+  (cellChange)="onCellChange($event)"
+  (sortChange)="onSortChange($event)"
+></app-smart-table>
+
+---
+
+<app-acl-graph [graph]="MOCK_ACL_GRAPH"></app-acl-graph>

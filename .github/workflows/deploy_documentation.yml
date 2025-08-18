@@ -1,0 +1,22 @@
+name: Publish MkDocs via GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - run: cp .env.example .env
+      - name: Build docker-compose
+        run: docker compose build documentation
+      - name: Build and encrypt website
+        run: docker compose run --rm documentation npm run build
+      - name: Deploy new build
+        run: |
+          docker compose run -v ${{ github.workspace }}/.git:/code/.git --rm documentation ghp-import --no-jekyll --message="Deployed {sha} with MkDocs version: {version}" /code/site
+          docker compose run -v ${{ github.workspace }}/.git:/code/.git --rm documentation git push -f  https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages

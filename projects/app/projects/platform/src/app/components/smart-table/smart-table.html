@@ -1,0 +1,71 @@
+<table class="smart-table">
+    <thead>
+      <tr>
+        @for (col of columns; track col.key) {
+            <th (click)="sortByColumn(col.key)" (mouseenter)="colHovered = col.key" (mouseleave)="colHovered = null">
+               {{ col.header }}
+               <span>
+                    {{ getSortIndicator(col.key) }}
+               </span>
+            </th>
+        }
+      </tr>
+    </thead>
+  
+    <tbody>
+        @for (row of rows; track row; let rowIndex = $index) {
+        <tr>
+            @for (col of columns; track col.key) {
+                <td (click)="startEdit(rowIndex, col.key)" [class.editing]="isEditing(rowIndex, col.key)" [ngClass]="{ 'editable': col.inputType }">
+                    
+                    @if (isEditing(rowIndex, col.key)) {
+                    
+                        @if (col.inputType === 'select') {
+                            <select 
+                                [(ngModel)]="editing.value" 
+                                (blur)="saveEdit()" 
+                                (change)="saveEdit()" 
+                                autofocus
+                            >
+                                @for (option of col.options; track option) {
+                                    <option [value]="option.value">{{ option.label }}</option>
+                                }
+                            </select>
+                        } @else if (col.inputType === 'autocomplete') {
+                            <input
+                                [type]="col.inputType || 'text'"
+                                [(ngModel)]="editing.value"  
+                                (blur)="saveEdit()" 
+                                (keydown)="onInputKeydown($event)"
+                                autofocus
+                                list="autocompleteOptions"
+                            /> 
+
+                            <datalist id="autocompleteOptions">
+                                @for (option of (autocompleteOptions(col.key) | async); track option) {
+                                    <option [value]="option.value">{{ option.label }}</option>
+                                }
+                            </datalist>
+                        } @else {
+                            <input
+                                [type]="col.inputType || 'text'"
+                                [(ngModel)]="editing.value"  
+                                (blur)="saveEdit()" 
+                                (keydown)="onInputKeydown($event)"
+                                autofocus
+                            />
+                        }
+                    
+                    } @else {
+                        <span class="cell-value">
+                            {{ getLabelOfCell(row, col) }}
+                        </span>
+                    }
+
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+  </table>
+  
