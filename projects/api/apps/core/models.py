@@ -227,6 +227,17 @@ class TransformableEntityContainConservedEntity(models.Model):
         help_text="Ratio of conserved entity per unit of transformable entity.",
     )
 
+    class Meta:
+        verbose_name = "Transformable Entity Contain Conserved Entity"
+        verbose_name_plural = "Transformable Entity Contain Conserved Entities"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["transformable_entity", "conserved_entity"],
+                name="unique_conserved_entity_per_transformable_entity",
+            )
+        ]
+
 
 class GoodContainTransformableEntity(models.Model):
 
@@ -252,6 +263,17 @@ class GoodContainTransformableEntity(models.Model):
         help_text="Unit of the quantity.",
     )
 
+    class Meta:
+        verbose_name = "Good Contain Transformable Entity"
+        verbose_name_plural = "Good Contain Transformable Entities"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["good", "transformable_entity"],
+                name="unique_transformable_entity_per_good",
+            )
+        ]
+
 
 class GoodContainGood(models.Model):
 
@@ -276,6 +298,17 @@ class GoodContainGood(models.Model):
         on_delete=models.CASCADE,
         help_text="Unit of the quantity.",
     )
+
+    class Meta:
+        verbose_name = "Good Contain Good"
+        verbose_name_plural = "Good Contain Goods"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["parent_good", "child_good"],
+                name="unique_child_good_per_parent_good",
+            )
+        ]
 
 
 class Process(models.Model):
@@ -367,12 +400,61 @@ class ElementaryFlowCompartment(models.Model):
         return f"{self.name} ({self.project.name})"
 
 
-class ElementaryFlow(models.Model):
+class ProductionFactor(models.Model):
 
-    process = models.ForeignKey(
-        Process,
+    project = models.ForeignKey(
+        Project,
         on_delete=models.CASCADE,
-        related_name="elementary_flows",
+        related_name="production_factors",
+    )
+
+    name = models.CharField(
+        max_length=256,
+    )
+
+
+class ProductionFactorContainTransformableEntity(models.Model):
+
+    production_factor = models.ForeignKey(
+        ProductionFactor,
+        on_delete=models.CASCADE,
+        related_name="transformable_entities",
+    )
+
+    transformable_entity = models.ForeignKey(
+        TransformableEntity,
+        on_delete=models.CASCADE,
+        related_name="production_factors",
+    )
+
+    quantity = models.FloatField(
+        help_text="Quantity of transformable entity in the production factor.",
+    )
+
+    unit = models.ForeignKey(
+        Unit,
+        on_delete=models.CASCADE,
+        help_text="Unit of the quantity.",
+    )
+
+    class Meta:
+        verbose_name = "Production Factor Contain Transformable Entity"
+        verbose_name_plural = "Production Factor Contain Transformable Entities"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["production_factor", "transformable_entity"],
+                name="unique_transformable_entity_per_production_factor",
+            )
+        ]
+
+
+class ElementaryFlowType(models.Model):
+
+    production_factor = models.ForeignKey(
+        ProductionFactor,
+        on_delete=models.CASCADE,
+        related_name="elementary_flow_types",
     )
 
     compartment = models.ForeignKey(
@@ -381,8 +463,31 @@ class ElementaryFlow(models.Model):
         related_name="elementary_flows",
     )
 
-    conserved_entity = models.ForeignKey(
-        ConservedEntity,
+    def __str__(self):
+        return f"{self.production_factor.name} ({self.compartment.name})"
+
+    def meta(self):
+        verbose_name = "Elementary Flow Type"
+        verbose_name_plural = "Elementary Flow Types"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["production_factor", "compartment"],
+                name="unique_elementary_flow_type_per_production_factor_compartment",
+            )
+        ]
+
+
+class ElementaryFlow(models.Model):
+
+    elementary_flow_type = models.ForeignKey(
+        ElementaryFlowType,
+        on_delete=models.CASCADE,
+        related_name="elementary_flows",
+    )
+
+    process = models.ForeignKey(
+        Process,
         on_delete=models.CASCADE,
         related_name="elementary_flows",
     )
@@ -402,3 +507,40 @@ class ElementaryFlow(models.Model):
         choices=[("input", "Input"), ("output", "Output")],
         help_text="Indicates whether the conserved entity is an input to or an output from the process.",
     )
+
+
+class FinalDemand(models.Model):
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name="final_demands",
+    )
+
+    good = models.ForeignKey(
+        Good,
+        on_delete=models.CASCADE,
+        related_name="final_demands",
+    )
+
+    quantity = models.FloatField(
+        help_text="Quantity of good in the final demand.",
+    )
+
+    unit = models.ForeignKey(
+        Unit,
+        on_delete=models.CASCADE,
+        help_text="Unit of the quantity.",
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Final Demand"
+        verbose_name_plural = "Final Demands"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["project", "good"], name="unique_final_demand_per_project_good"
+            )
+        ]

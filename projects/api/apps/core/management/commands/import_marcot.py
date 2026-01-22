@@ -150,13 +150,13 @@ class Command(BaseCommand):
             return obj
 
         # -------------------------
-        # 0) Prepare new project
+        # Prepare new project
         # -------------------------
         print("Creating new project...")
         project = Project.objects.create(name="New Imported Project")
 
         # -------------------------
-        # 1) l_cons: conserved entities + units
+        # l_cons: conserved entities + units
         # -------------------------
         if "l_cons" in wb.sheetnames:
             print("Importing conserved entities...")
@@ -194,7 +194,7 @@ class Command(BaseCommand):
                 conserved_by_extid[str(extid).strip()] = obj
 
         # -------------------------
-        # 2) l_trans: transformable entities + units
+        # l_trans: transformable entities + units
         # -------------------------
         if "l_trans" in wb.sheetnames:
             ws = wb["l_trans"]
@@ -219,7 +219,7 @@ class Command(BaseCommand):
                 trans_by_extid[str(extid).strip()] = obj
 
         # -------------------------
-        # 3) l_goods: goods + reference_unit
+        # l_goods: goods + reference_unit
         # -------------------------
         if "l_goods" in wb.sheetnames:
             ws = wb["l_goods"]
@@ -244,7 +244,7 @@ class Command(BaseCommand):
                 good_by_extid[str(pid).strip()] = obj
 
         # -------------------------
-        # 4) l_act: processes
+        # l_act: processes
         # -------------------------
         if "l_act" in wb.sheetnames:
             ws = wb["l_act"]
@@ -264,7 +264,7 @@ class Command(BaseCommand):
                 proc_by_norm_name[norm(name)] = obj
 
         # -------------------------
-        # 5) cons_permol: composition Transformable -> Conserved
+        # cons_permol: composition Transformable -> Conserved
         # -------------------------
         if "cons_permol" in wb.sheetnames:
             ws = wb["cons_permol"]
@@ -317,8 +317,78 @@ class Command(BaseCommand):
                     ratio=comp,
                 )
 
+        # # -------------------------
+        # # cons: composition Transformable -> Conserved
+        # # -------------------------
+        # if "cons" in wb.sheetnames:
+        #     ws = wb["cons"]
+        #     rows = list(ws.values)
+
+        #     if not rows:
+        #         pass
+
+        #     else:
+        #         header = list(rows[0])
+        #         # header[0] is like "id", header[1:] are transformableIds
+        #         transformable_ids = [h for h in header[1:] if h not in (None, "")]
+        #         transformable_map = trans_by_extid.copy()
+
+        #         # Build transformable lookup
+        #         conservable_by_name = {
+        #             norm(c.name): c for c in ConservedEntity.objects.all()
+        #         }
+
+        #         for row in rows[1:]:
+        #             if not row or all(v is None for v in row):
+        #                 continue
+
+        #             conservable_key = row[0]
+        #             if not conservable_key:
+        #                 raise Exception(
+        #                     f"Skipping cons row due to missing conserved entity: cons -> {row}"
+        #                 )
+        #             conservable = conserved_by_extid.get(str(conservable_key).strip()) or conservable_by_name.get(
+        #                 norm(conservable_key)
+        #             )
+        #             if not conservable:
+        #                 raise Exception(
+        #                     f"Skipping cons row due to not defined conservable entity: cons -> {row}"
+        #                 )
+
+        #             for col_idx, pid in enumerate(transformable_ids, start=1):
+        #                 qty = as_float(row[col_idx] if col_idx < len(row) else None)
+        #                 if qty is None:
+        #                     # Quantity is None, so skip-it as is 0 / not present
+        #                     continue
+
+        #                 transformable = transformable_map.get(str(pid).strip())
+        #                 if not transformable:
+        #                     raise Exception(
+        #                         f"Skipping cons row due to not defined transformable: cons -> {row}"
+        #                     )
+
+        #                 # We want to report all the measure to 'mol' unit ?!
+        #                 molar_mass = conservable.molar_mass
+        #                 todo: find a way to store in Kg or to convert to mol
+
+        #                 u = transformable.reference_unit
+
+        #                 if verbose:
+        #                     print(
+        #                         "-| Linking TransformableEntity '{}' with ConservedEntity '{}' | quantity: {}".format(
+        #                             transformable.name, conservable.name, qty
+        #                         )
+        #                     )
+
+        #                 TransformableEntityContainConservedEntity.objects.create(
+        #                     transformable_entity=transformable,
+        #                     conserved_entity=conservable,
+        #                     unit=mol_unit,
+        #                     ratio=comp,
+        #                 )
+
         # -------------------------
-        # 6) lay_trans: Good contains Transformable
+        # lay_trans: Good contains Transformable
         #    matrix: first column is transformable id/name, next columns are productIds
         # -------------------------
         if "lay_trans" in wb.sheetnames:
@@ -385,7 +455,7 @@ class Command(BaseCommand):
                         )
 
         # -------------------------
-        # 7) lay_goods: parent good contains child good
+        # lay_goods: parent good contains child good
         # -------------------------
         if "lay_goods" in wb.sheetnames:
             ws = wb["lay_goods"]
@@ -435,7 +505,7 @@ class Command(BaseCommand):
                 )
 
         # -------------------------
-        # 8) tr: economic flows
+        # tr: economic flows
         #     columns we use:
         #     - goods_in ID (input good)
         #     - act (activity label)  -> match Process by normalized name prefix
@@ -531,7 +601,7 @@ class Command(BaseCommand):
                     )
 
         # -------------------------
-        # 9) background_biosphere: create compartment hierarchy
+        # background_biosphere: create compartment hierarchy
         # -------------------------
         if "background_biosphere" in wb.sheetnames:
             ws = wb["background_biosphere"]

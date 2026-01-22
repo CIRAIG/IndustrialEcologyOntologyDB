@@ -16,6 +16,9 @@ from .models import (
     Process,
     EconomicFlow,
     ElementaryFlowCompartment,
+    ProductionFactor,
+    ProductionFactorContainTransformableEntity,
+    ElementaryFlowType,
     ElementaryFlow,
 )
 
@@ -172,7 +175,84 @@ class ElementaryFlowCompartmentAdmin(ImportExportModelAdmin):
     )
 
 
+@admin.register(ProductionFactor)
+class ProductionFactorAdmin(ImportExportModelAdmin):
+    list_display = ("name", "project")
+    search_fields = ("name",)
+    list_filter = (AutocompleteFilterFactory("project", "project"),)
+
+
+@admin.register(ProductionFactorContainTransformableEntity)
+class ProductionFactorContainTransformableEntityAdmin(ImportExportModelAdmin):
+    list_display = (
+        "production_factor",
+        "transformable_entity",
+        "quantity",
+        "unit",
+        "production_factor__project",
+    )
+    list_filter = (
+        AutocompleteFilterFactory("project", "production_factor__project"),
+        AutocompleteFilterFactory("production factor", "production_factor"),
+        AutocompleteFilterFactory("transformable entity", "transformable_entity"),
+        "unit",
+        "unit__dimension",
+    )
+    autocomplete_fields = [
+        "production_factor",
+        "transformable_entity",
+        "unit",
+    ]
+
+
+@admin.register(ElementaryFlowType)
+class ElementaryFlowTypeAdmin(ImportExportModelAdmin):
+    list_display = (
+        "production_factor",
+        "compartment",
+        "production_factor__project",
+    )
+    search_fields = (
+        "production_factor__name",
+        "compartment__name",
+    )
+    list_filter = (
+        AutocompleteFilterFactory("project", "production_factor__project"),
+        AutocompleteFilterFactory("production factor", "production_factor"),
+        AutocompleteFilterFactory("compartment", "compartment"),
+    )
+    autocomplete_fields = (
+        "production_factor",
+        "compartment",
+    )
+
+
 @admin.register(ElementaryFlow)
 class ElementaryFlowAdmin(ImportExportModelAdmin):
-    list_display = ("compartment", "unit")
-    list_filter = ("compartment", "unit")
+    list_display = (
+        "elementary_flow_type",
+        "process",
+        "quantity",
+        "unit",
+        "direction",
+        "elementary_flow_type__production_factor__project",
+    )
+    list_filter = (
+        AutocompleteFilterFactory(
+            "project", "elementary_flow_type__production_factor__project"
+        ),
+        AutocompleteFilterFactory("elementary flow type", "elementary_flow_type"),
+        AutocompleteFilterFactory("process", "process"),
+        AutocompleteFilterFactory(
+            "production factor", "elementary_flow_type__production_factor"
+        ),
+        AutocompleteFilterFactory("compartment", "elementary_flow_type__compartment"),
+        "direction",
+        "unit",
+        "unit__dimension",
+    )
+    autocomplete_fields = [
+        "elementary_flow_type",
+        "process",
+        "unit",
+    ]
